@@ -27,14 +27,18 @@ namespace Redis.ConsoleApp
         static void Main(string[] args)
         {
 
+            Console.WriteLine("(0) - ping DB");
             Console.WriteLine("(1) - Test Read Write:");
             Console.WriteLine("(2) - Test Serialize Deserialize:");
             Console.WriteLine("(3) - Test Streaming:");
-
+            
 
             var input = Console.ReadLine();
             switch (input)
             {
+                case "0":
+                    PingDB();
+                    break;
                 case "1":
                     TestReadWrite();
                     break;
@@ -61,6 +65,14 @@ namespace Redis.ConsoleApp
             }
 
 
+
+        }
+
+        private static void PingDB()
+        {
+            Console.WriteLine("Pinging  DB...");
+            var png = RedisConnectorHelper.Connection.GetDatabase().Ping();
+            Console.WriteLine("DB Pinged  successfully");
 
         }
 

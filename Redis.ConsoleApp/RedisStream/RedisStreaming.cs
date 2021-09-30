@@ -11,7 +11,7 @@ namespace Redis.ConsoleApp.RedisStream
     {
 
         private IDatabase redisDB ;
-        private const string streamID = "5abbcfc5-e407-4892-a0bb-e26e98bbd949";
+        private const string streamID = "RedisDefaultStream";
         public RedisStreaming()
         {
             redisDB = RedisConnectorHelper.Connection.GetDatabase();
@@ -54,7 +54,7 @@ namespace Redis.ConsoleApp.RedisStream
         {
             var values = new NameValueEntry[]
             {
-                new NameValueEntry("temp", "19.8"),
+                new NameValueEntry("temp", new Random().Next(1,50)),
                 new NameValueEntry("TEMP_DATE", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"))
             };
             ;//Guid.NewGuid().ToString();
@@ -78,7 +78,7 @@ namespace Redis.ConsoleApp.RedisStream
         {
             try
             {
-                ShowPendingMsgInfo();
+                //ShowPendingMsgInfo();
 
                 var messages = redisDB.StreamRead(streamID, "0-0");
                 var curr_msg = messages.FirstOrDefault(f => f.Id ==new RedisValue(msg_id));
