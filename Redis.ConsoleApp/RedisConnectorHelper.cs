@@ -10,7 +10,7 @@ namespace Redis.ConsoleApp
         {
             var configurationOptions = new ConfigurationOptions
             {
-                EndPoints = { "127.0.0.1:6379" }
+                EndPoints = { "172.31.192.1:6300" }
             };
 
             
