@@ -1,4 +1,5 @@
 ﻿using Redis.ConsoleApp.RedisStream;
+using StackExchange.Redis;
 using System;
 using System.Threading.Tasks;
 
@@ -23,6 +24,24 @@ namespace Redis.ConsoleApp
                 return true;
             } ;
         }
+        private static void TestConsuming(string chanel_name)
+        {
+
+            using var rds = RedisConnectorHelper.Connection;
+
+            ISubscriber sub = rds.GetSubscriber();
+            //Subscribe to the channel named messages
+            sub.Subscribe(chanel_name, (channel, message) =>
+            {
+                //Output received message
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] {message}");
+            });
+            Console.WriteLine("subscribed messages");
+            Console.ReadKey();
+
+
+        }
+
 
         static void Main(string[] args)
         {
@@ -31,7 +50,7 @@ namespace Redis.ConsoleApp
             Console.WriteLine("(1) - Test Read Write:");
             Console.WriteLine("(2) - Test Serialize Deserialize:");
             Console.WriteLine("(3) - Test Streaming:");
-            
+            Console.WriteLine("(4) - Test Consuming:");
 
             var input = Console.ReadLine();
             switch (input)
@@ -48,7 +67,11 @@ namespace Redis.ConsoleApp
                 case "3":
                     _ = TestStreaming();
                     break;
-
+                case "4":
+                    Console.WriteLine("Enter chanel name:");
+                    string ch_name = Console.ReadLine();
+                    TestConsuming(ch_name);
+                    break;
                 default:
                     break;
             }
