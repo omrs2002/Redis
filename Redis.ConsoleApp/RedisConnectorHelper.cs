@@ -10,7 +10,9 @@ namespace Redis.ConsoleApp
         {
             var configurationOptions = new ConfigurationOptions
             {
-                EndPoints = { "127.0.0.1:6379" }
+                //EndPoints = { "127.0.0.1:6379" }
+                EndPoints = { "127.0.0.1:6300" }
+                
             };
 
             
@@ -18,6 +20,9 @@ namespace Redis.ConsoleApp
             {
                 return ConnectionMultiplexer.Connect(configurationOptions);
             });
+
+            
+
         }
 
     
